@@ -1,2 +1,5 @@
 .git
 node_modules/
+# on gitlab-ci don't add google-cloud-sdk into docker image
+google-cloud-sdk
+gcloud.p12
