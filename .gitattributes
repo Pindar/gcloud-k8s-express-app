@@ -1,0 +1,35 @@
+# Autodetect text files
+* text=auto
+
+# Force the following filetypes to have unix eols, so Windows does not break them
+*.html text eol=lf
+*.ejs text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.css.map text eol=lf
+*.scss text eol=lf
+*.svg text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.shtml text eol=lf
+
+# Force images/fonts to be handled as binaries
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.png binary
+*.t3x binary
+*.t3d binary
+*.exe binary
+*.data binary
+*.ttf binary
+*.eof binary
+*.eot binary
+*.swf binary
+*.mov binary
+*.mp4 binary
+*.mp3 binary
+*.ogg binary
+*.flv binary
+*.woff binary
+*.woff2 binary
