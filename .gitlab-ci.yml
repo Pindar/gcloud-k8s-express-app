@@ -1,12 +1,40 @@
 image: docker:latest
 
+# When using dind, it's wise to use the overlayfs driver for
+# improved performance.
+variables:
+  DOCKER_DRIVER: overlay
+
 services:
   - docker:dind
+
+before_script:
+  - apk update && apk add wget bash python && rm -rf /var/cache/apk/*
+  - wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz --no-check-certificate
+  - tar zxvf google-cloud-sdk.tar.gz
+  - rm google-cloud-sdk.tar.gz
+  - ls -l
+  - ./google-cloud-sdk/install.sh --usage-reporting=true --path-update=true
+  - export PATH=$(pwd)/google-cloud-sdk/bin:$PATH
+  - gcloud --quiet components update
+  - echo "$GCLOUD_GITLAB_CI_SERVICE_ACCOUNT_KEY" | base64 -d > gcloud.p12
+  - gcloud auth activate-service-account "$GCLOUD_GITLAB_CI_SERVICE_ACCOUNT" --key-file=gcloud.p12  --project "$GCLOUD_PROJECT" --quiet
+
+after_script:
+  # clean up
+  - rm -rf *
 
 build:
   stage: build
   script:
-#    - docker login -u "gitlab-ci-token" -p "$CI_BUILD_TOKEN" $CI_REGISTRY
-    - docker build --pull -t "$CI_BUILD_REF_NAME" .
-#    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME" .
-#    - docker push "$CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME"
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-latest}" .
+    - gcloud docker -- push "$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-latest}"
+
+deploy:
+  stage: deploy
+  script:
+    - gcloud --quiet components install kubectl
+    - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcloud.p12
+    - gcloud --quiet container clusters get-credentials $CLUSTER_NAME --zone $GCLOUD_ZONE
+    - kubectl apply -f deployment.yaml --record
+    - kubectl set image deployment/hello-deployment hellonode=$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-latest}

@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hello-deployment
+spec:
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: hello-node
+    spec:
+      containers:
+      - name: hellonode
+        image: eu.gcr.io/sd-test-jenkins-cd/kbnw-express-app:latest
+        ports:
+        - containerPort: 3000
