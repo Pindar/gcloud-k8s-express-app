@@ -46,6 +46,7 @@ deploy_branch:
     - master
 
 stop_review:
+  stage: deploy
   variables:
     GIT_STRATEGY: none
   script:
