@@ -5,6 +5,9 @@ image: pindar/gcloud-kubectl-dind:latest
 variables:
   DOCKER_DRIVER: overlay
 
+services:
+  - docker:dind
+
 before_script:
   - echo "$GCLOUD_GITLAB_CI_SERVICE_ACCOUNT_KEY" | base64 -d > gcloud.p12
   - gcloud auth activate-service-account "$GCLOUD_GITLAB_CI_SERVICE_ACCOUNT" --key-file=gcloud.p12  --project "$GCLOUD_PROJECT" --quiet
