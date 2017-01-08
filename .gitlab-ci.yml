@@ -1,12 +1,9 @@
-image: docker:latest
+image: pindar/gcloud-kubectl-dind:latest
 
 # When using dind, it's wise to use the overlayfs driver for
 # improved performance.
 variables:
   DOCKER_DRIVER: overlay
-
-services:
-  - pindar/gcloud-kubectl-dind:latest
 
 before_script:
   - echo "$GCLOUD_GITLAB_CI_SERVICE_ACCOUNT_KEY" | base64 -d > gcloud.p12
