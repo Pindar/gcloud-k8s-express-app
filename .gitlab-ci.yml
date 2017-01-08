@@ -50,6 +50,8 @@ stop_review:
     GIT_STRATEGY: none
   script:
     - echo "Remove review app"
+    - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcloud.p12
+    - gcloud --quiet container clusters get-credentials $CLUSTER_NAME --zone $GCLOUD_ZONE
     - kubectl delete namespaces ${CI_BUILD_REF_SLUG}
   when: manual
   environment:
