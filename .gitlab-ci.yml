@@ -6,17 +6,9 @@ variables:
   DOCKER_DRIVER: overlay
 
 services:
-  - docker:dind
+  - pindar/gcloud-kubectl-dind:latest
 
 before_script:
-  - apk update && apk add wget bash python && rm -rf /var/cache/apk/*
-  - wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz --no-check-certificate
-  - tar zxvf google-cloud-sdk.tar.gz
-  - rm google-cloud-sdk.tar.gz
-  - ls -l
-  - ./google-cloud-sdk/install.sh --usage-reporting=true --path-update=true
-  - export PATH=$(pwd)/google-cloud-sdk/bin:$PATH
-  - gcloud --quiet components update
   - echo "$GCLOUD_GITLAB_CI_SERVICE_ACCOUNT_KEY" | base64 -d > gcloud.p12
   - gcloud auth activate-service-account "$GCLOUD_GITLAB_CI_SERVICE_ACCOUNT" --key-file=gcloud.p12  --project "$GCLOUD_PROJECT" --quiet
 
@@ -33,7 +25,6 @@ build:
 deploy_branch:
   stage: deploy
   script:
-    - gcloud --quiet components install kubectl
     - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcloud.p12
     - gcloud --quiet container clusters get-credentials $CLUSTER_NAME --zone $GCLOUD_ZONE
     # Don't use public load balancing for development branches
@@ -48,10 +39,22 @@ deploy_branch:
   environment:
     name: review/$CI_BUILD_REF_NAME
     url: http://localhost:8001/api/v1/proxy/namespaces/$CI_BUILD_REF_SLUG/services/hello-deployment-frontend:80/
+    on_stop: stop_review
   only:
     - branches
   except:
     - master
+
+stop_review:
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - echo "Remove review app"
+    - kubectl delete namespaces ${CI_BUILD_REF_SLUG}
+  when: manual
+  environment:
+    name: review/$CI_BUILD_REF_NAME
+    action: stop
 
 deploy_staging:
   stage: deploy
