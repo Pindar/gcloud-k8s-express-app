@@ -29,11 +29,8 @@ deploy_branch:
   script:
     # Don't use public load balancing for development branches
     - sed -i.bak 's#LoadBalancer#ClusterIP#' ./k8s/services/frontend.yaml
-    # Create namespace if it doesn't exist
-    - kubectl get ns ${CI_BUILD_REF_SLUG} || kubectl create ns ${CI_BUILD_REF_SLUG}
-    - kubectl apply --namespace=${CI_BUILD_REF_SLUG} -f k8s/services/ --record
-    - kubectl apply --namespace=${CI_BUILD_REF_SLUG} -f k8s/dev/ --record
-    - kubectl set image deployment/hello-deployment hellonode=$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-latest} --namespace=${CI_BUILD_REF_SLUG}
+    - chmod +x k8s/deploy.sh
+    - ./k8s/deploy.sh ${CI_BUILD_REF_SLUG}
     - echo 'To access your environment run `kubectl proxy`'
     - echo "Then access your service via http://localhost:8001/api/v1/proxy/namespaces/${CI_BUILD_REF_SLUG}/services/hello-deployment-frontend:80/"
   environment:
@@ -60,14 +57,9 @@ stop_review:
 deploy_staging:
   stage: deploy
   script:
-    - kubectl get ns staging || kubectl create ns staging
-    - gcloud --quiet components install kubectl
-    - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcloud.p12
-    - gcloud --quiet container clusters get-credentials $CLUSTER_NAME --zone $GCLOUD_ZONE
-    - kubectl apply --namespace=staging -f k8s/services/ --record
-    - kubectl apply --namespace=staging -f k8s/staging/ --record
-    - kubectl set image deployment/hello-deployment hellonode=$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-latest} --namespace=staging
-    - export DOMAIN=`kubectl --namespace=production get service/hello-deployment-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`
+    - chmod +x k8s/deploy.sh
+    - ./k8s/deploy.sh staging
+    - export DOMAIN=`kubectl --namespace=staging get service/hello-deployment-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`
   environment:
     name: staging
     url: http://$DOMAIN
@@ -77,13 +69,8 @@ deploy_staging:
 deploy_production:
   stage: deploy
   script:
-    - kubectl get ns production || kubectl create ns production
-    - gcloud --quiet components install kubectl
-    - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcloud.p12
-    - gcloud --quiet container clusters get-credentials $CLUSTER_NAME --zone $GCLOUD_ZONE
-    - kubectl apply --namespace=production -f k8s/services/ --record
-    - kubectl apply --namespace=production -f k8s/production/ --record
-    - kubectl set image deployment/hello-deployment hellonode=$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-latest} --namespace=production
+    - chmod +x k8s/deploy.sh
+    - ./k8s/deploy.sh production
     - export DOMAIN=`kubectl --namespace=production get service/hello-deployment-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`
   environment:
     name: production
