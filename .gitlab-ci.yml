@@ -29,9 +29,9 @@ build:
 tag_build:
   stage: build
   script:
-    - docker pull "$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-`echo $CI_BUILD_REF | head -c 8`}"
+    - gcloud docker -- pull "$CI_REGISTRY_IMAGE:`echo $CI_BUILD_REF | head -c 8`"
     - docker tag "$CI_REGISTRY_IMAGE:`echo $CI_BUILD_REF | head -c 8`" "$CI_REGISTRY_IMAGE:${CI_BUILD_TAG}"
-    - docker push "$CI_REGISTRY_IMAGE:${CI_BUILD_TAG}"
+    - gcloud docker -- push "$CI_REGISTRY_IMAGE:${CI_BUILD_TAG}"
   only:
     - tags
 
