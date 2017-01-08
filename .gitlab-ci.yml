@@ -21,8 +21,8 @@ after_script:
 build:
   stage: build
   script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-latest}" .
-    - gcloud docker -- push "$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-latest}"
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-`echo $CI_BUILD_REF | head -c 8`}" .
+    - gcloud docker -- push "$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-`echo $CI_BUILD_REF | head -c 8`}"
 
 deploy_branch:
   stage: deploy
@@ -53,6 +53,8 @@ stop_review:
   environment:
     name: review/$CI_BUILD_REF_NAME
     action: stop
+  only:
+    - triggers
 
 deploy_staging:
   variables:
@@ -69,6 +71,7 @@ deploy_staging:
     url: http://$DOMAIN
   only:
     - master
+    - tags
 
 deploy_production:
   variables:
@@ -85,4 +88,4 @@ deploy_production:
     url: http://$DOMAIN
   when: manual
   only:
-    - master
+    - tags
