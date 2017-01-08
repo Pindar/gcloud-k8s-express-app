@@ -1,4 +1,4 @@
-image: pindar/gcloud-kubectl-dind:latest
+image: pindar/gcloud-kubectl-docker:latest
 
 # When using dind, it's wise to use the overlayfs driver for
 # improved performance.
