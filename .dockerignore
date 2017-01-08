@@ -1,5 +1,6 @@
 .git
 node_modules/
-# on gitlab-ci don't add google-cloud-sdk into docker image
-google-cloud-sdk
+# don't save googles key
 gcloud.p12
+# ignore all kubernetes files
+k8s/
