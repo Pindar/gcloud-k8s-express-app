@@ -3,7 +3,10 @@ kind: Deployment
 metadata:
   name: hello-deployment
 spec:
-  replicas: 2 # tells deployment to run 2 pods matching the template
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-node
   template: # create pods using pod definition in this template
     metadata:
       labels:
