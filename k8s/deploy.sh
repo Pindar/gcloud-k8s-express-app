@@ -9,4 +9,4 @@ kubectl apply --namespace=${CI_ENVIRONMENT} -f k8s/services/ --record
 # deploy Deployment
 kubectl apply --namespace=${CI_ENVIRONMENT} -f k8s/dev/ --record
 # update docker image to latest
-kubectl set image deployment/hello-deployment hellonode=$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-latest} --namespace=${CI_ENVIRONMENT}
+kubectl set image deployment/hello-deployment hellonode=$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-`echo $CI_BUILD_REF | head -c 8`} --namespace=${CI_ENVIRONMENT}
