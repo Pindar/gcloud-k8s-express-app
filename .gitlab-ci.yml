@@ -55,25 +55,33 @@ stop_review:
     action: stop
 
 deploy_staging:
+  variables:
+    - DOMAIN: ""
+    - NAMESPACE: "staging"
   stage: deploy
   script:
     - chmod +x k8s/deploy.sh
-    - ./k8s/deploy.sh staging
-    - export DOMAIN=`kubectl --namespace=staging get service/hello-deployment-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`
+    - ./k8s/deploy.sh $NAMESPACE
+    - export DOMAIN=`kubectl --namespace=$NAMESPACE get service/hello-deployment-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`
+    - echo "Then access your service via http://$DOMAIN"
   environment:
-    name: staging
+    name: $NAMESPACE
     url: http://$DOMAIN
   only:
     - master
 
 deploy_production:
+  variables:
+    - DOMAIN: ""
+    - NAMESPACE: "production"
   stage: deploy
   script:
     - chmod +x k8s/deploy.sh
-    - ./k8s/deploy.sh production
-    - export DOMAIN=`kubectl --namespace=production get service/hello-deployment-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`
+    - ./k8s/deploy.sh $NAMESPACE
+    - export DOMAIN=`kubectl --namespace=$NAMESPACE get service/hello-deployment-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`
+    - echo "Then access your service via http://$DOMAIN"
   environment:
-    name: production
+    name: $NAMESPACE
     url: http://$DOMAIN
   when: manual
   only:
