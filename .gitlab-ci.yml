@@ -11,6 +11,8 @@ services:
 before_script:
   - echo "$GCLOUD_GITLAB_CI_SERVICE_ACCOUNT_KEY" | base64 -d > gcloud.p12
   - gcloud auth activate-service-account "$GCLOUD_GITLAB_CI_SERVICE_ACCOUNT" --key-file=gcloud.p12  --project "$GCLOUD_PROJECT" --quiet
+  - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcloud.p12
+  - gcloud --quiet container clusters get-credentials $CLUSTER_NAME --zone $GCLOUD_ZONE
 
 after_script:
   # clean up
@@ -25,8 +27,6 @@ build:
 deploy_branch:
   stage: deploy
   script:
-    - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcloud.p12
-    - gcloud --quiet container clusters get-credentials $CLUSTER_NAME --zone $GCLOUD_ZONE
     # Don't use public load balancing for development branches
     - sed -i.bak 's#LoadBalancer#ClusterIP#' ./k8s/services/frontend.yaml
     # Create namespace if it doesn't exist
@@ -51,8 +51,6 @@ stop_review:
     GIT_STRATEGY: none
   script:
     - echo "Remove review app"
-    - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcloud.p12
-    - gcloud --quiet container clusters get-credentials $CLUSTER_NAME --zone $GCLOUD_ZONE
     - kubectl delete namespaces ${CI_BUILD_REF_SLUG}
   when: manual
   environment:
