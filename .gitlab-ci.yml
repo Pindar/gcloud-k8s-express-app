@@ -53,6 +53,9 @@ stop_review:
   environment:
     name: review/$CI_BUILD_REF_NAME
     action: stop
+  except:
+    - master
+    - tags
 
 deploy_staging:
   variables:
