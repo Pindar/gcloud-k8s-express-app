@@ -16,4 +16,11 @@ spec:
       - name: hellonode
         image: eu.gcr.io/sd-test-jenkins-cd/kbnw-express-app:latest
         ports:
-        - containerPort: 3000
+        - name: app-port
+          containerPort: 3000
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: app-port
+          initialDelaySeconds: 3
+          periodSeconds: 3
