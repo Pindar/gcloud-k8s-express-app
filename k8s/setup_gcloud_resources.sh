@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 # First argument is project id, defaults to test-gitlabci-k8s
 PROJECT_ID=${1:-"test-gitlabci-k8s"}

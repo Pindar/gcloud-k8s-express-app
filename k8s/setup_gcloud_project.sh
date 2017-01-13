@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 
 # First argument is project id, defaults to test-gitlabci-k8s
 PROJECT_ID=${1:-"test-gitlabci-k8s"}
@@ -10,7 +10,7 @@ gcloud projects describe $PROJECT_ID --format json
 if [[ $? -eq 0 ]]; then
   # cluster exists already, check status.
   # if cluster is already active do nothing
-  [[ `gcloud projects describe $PROJECT_ID --format json | jq -r '.lifecycleState'` == "ACTIVE" ]] && (echo "project is active" && exit 0)
+  [[ `gcloud projects describe $PROJECT_ID --format json | jq -r '.lifecycleState'` == "ACTIVE" ]] && echo "project is active" && exit 0
   [[ `gcloud projects describe $PROJECT_ID --format json | jq -r '.lifecycleState'` == "DELETE_REQUESTED" ]] && gcloud projects undelete $PROJECT_ID
 else
   # create a new project

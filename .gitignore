@@ -2,3 +2,4 @@
 node_modules/
 policy-update.json
 gitlab-ci-token.json
+policy.json
