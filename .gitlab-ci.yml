@@ -21,6 +21,8 @@ after_script:
 build:
   stage: build
   script:
+    - docker run -v $(pwd):/data -w /data -e NODE_ENV=development -i node:6.9-alpine /bin/sh -c "npm install && npm test && npm run-script test:coverage"
+    - docker run -v $(pwd):/data -w /data -e NODE_ENV=production -i node:6.9-alpine /bin/sh -c "npm prune --production"
     - docker build --pull -t "$CI_REGISTRY_IMAGE:`echo $CI_BUILD_REF | head -c 8`" .
     - gcloud docker -- push "$CI_REGISTRY_IMAGE:`echo $CI_BUILD_REF | head -c 8`"
   except:

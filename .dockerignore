@@ -4,3 +4,10 @@ node_modules/
 gcloud.p12
 # ignore all kubernetes files
 k8s/
+
+.nyc_output/
+coverage/
+
+policy-update.json
+gitlab-ci-token.json
+policy.json

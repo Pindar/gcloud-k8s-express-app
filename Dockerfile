@@ -1,9 +1,9 @@
 FROM node:6.9-alpine
 
 WORKDIR /data
-ENV NODE PRODUCTION
+ENV NODE_ENV production
 
 ADD . /data
-RUN npm install
+RUN export NODE_ENV=production && npm install
 
 CMD ["npm", "start"]
