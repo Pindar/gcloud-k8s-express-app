@@ -82,7 +82,7 @@ deploy_staging:
     - echo "Then access your service via http://$DOMAIN"
   environment:
     name: $NAMESPACE
-    url: http://$DOMAIN
+    url: http://citeststaging.dittlmann.com
   only:
     - master
     - tags
@@ -99,7 +99,7 @@ deploy_production:
     - echo "Then access your service via http://$DOMAIN"
   environment:
     name: $NAMESPACE
-    url: http://$DOMAIN
+    url: http://citestprod.dittlmann.com
   when: manual
   only:
     - tags
