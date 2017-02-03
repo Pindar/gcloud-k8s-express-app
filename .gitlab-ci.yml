@@ -78,7 +78,7 @@ deploy_staging:
     - ./k8s/deploy.sh $NAMESPACE
   environment:
     name: $NAMESPACE
-    url: http://citeststaging.dittlmann.com
+    url: http://citeststaging.itnotes.de
   only:
     - master
     - tags
@@ -93,7 +93,7 @@ deploy_production:
     - ./k8s/deploy.sh $NAMESPACE
   environment:
     name: $NAMESPACE
-    url: http://citestprod.dittlmann.com
+    url: http://citestprod.itnotes.de
   when: manual
   only:
     - tags

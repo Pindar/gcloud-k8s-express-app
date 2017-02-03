@@ -4,13 +4,13 @@ metadata:
   name: test
 spec:
   rules:
-  - host: citeststaging.dittlmann.com
+  - host: citeststaging.itnotes.de
     http:
       paths:
       - backend:
           serviceName: hello-deployment-frontend-staging
           servicePort: 80
-  - host: citestprod.dittlmann.com
+  - host: citestprod.itnotes.de
     http:
       paths:
       - backend:
