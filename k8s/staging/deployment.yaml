@@ -7,6 +7,7 @@ spec:
   selector:
     matchLabels:
       app: hello-node
+      env: staging
   strategy:
     # indicate which strategy we want for rolling update
     type: RollingUpdate

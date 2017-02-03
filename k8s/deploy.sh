@@ -2,15 +2,17 @@
 
 CI_ENVIRONMENT=$1
 
-# Create namespace if it doesn't exist
-kubectl get ns ${CI_ENVIRONMENT} || kubectl create ns ${CI_ENVIRONMENT}
-# deploy service
-kubectl apply --namespace=${CI_ENVIRONMENT} -f k8s/services/ --record
+function create_namespace {
+  kubectl get ns $1 || kubectl create ns $1
+}
 
 # deploy Deployment
 if [[ "$CI_ENVIRONMENT" = "production" || "$CI_ENVIRONMENT" = "staging"  ]]; then
-  kubectl apply --namespace=${CI_ENVIRONMENT} -f k8s/${CI_ENVIRONMENT}/ --record
+  create_namespace production
+  kubectl apply --namespace=production -f k8s/${CI_ENVIRONMENT}/ --record
+  kubectl apply --namespace=production -f k8s/ingress/ --record
 else
+  create_namespace ${CI_ENVIRONMENT}
   kubectl apply --namespace=${CI_ENVIRONMENT} -f k8s/dev/ --record
 fi
 

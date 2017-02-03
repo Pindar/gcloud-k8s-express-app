@@ -9,9 +9,9 @@ services:
   - docker:dind
 
 before_script:
-  - echo "$GCLOUD_GITLAB_CI_SERVICE_ACCOUNT_KEY" | base64 -d > gcloud.p12
-  - gcloud auth activate-service-account "$GCLOUD_GITLAB_CI_SERVICE_ACCOUNT" --key-file=gcloud.p12  --project "$GCLOUD_PROJECT" --quiet
-  - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcloud.p12
+  - echo "$GCLOUD_GITLAB_CI_SERVICE_ACCOUNT_KEY" | base64 -d > gcloud.json
+  - gcloud auth activate-service-account "$GCLOUD_GITLAB_CI_SERVICE_ACCOUNT" --key-file=gcloud.json  --project "$GCLOUD_PROJECT" --quiet
+  - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcloud.json
   - gcloud --quiet container clusters get-credentials $CLUSTER_NAME --zone $GCLOUD_ZONE
 
 after_script:
@@ -40,8 +40,6 @@ tag_build:
 deploy_branch:
   stage: deploy
   script:
-    # Don't use public load balancing for development branches
-    - sed -i.bak 's#LoadBalancer#ClusterIP#' ./k8s/services/frontend.yaml
     - chmod +x k8s/deploy.sh
     - ./k8s/deploy.sh ${CI_BUILD_REF_SLUG}
     - echo 'To access your environment run `kubectl proxy`'

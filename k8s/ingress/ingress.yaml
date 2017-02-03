@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test
+spec:
+  rules:
+  - host: citeststaging.dittlmann.com
+    http:
+      paths:
+      - backend:
+          serviceName: hello-deployment-frontend-staging
+          servicePort: 80
+  - host: citestprod.dittlmann.com
+    http:
+      paths:
+      - backend:
+          serviceName: hello-deployment-frontend-production
+          servicePort: 80
