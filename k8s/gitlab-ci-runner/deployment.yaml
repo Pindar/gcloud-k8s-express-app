@@ -31,5 +31,5 @@ spec:
           name: gitlab-runner
         name: config
       - hostPath:
-          path: /usr/share/ca-certificates/mozilla
+          path: /usr/share/ca-certificates
         name: cacerts
