@@ -4,8 +4,8 @@
 PROJECT_ID=${1:-"test-gitlabci-k8s"}
 
 # create and configure cluster
-gcloud container clusters create example-cluster
-gcloud container clusters get-credentials example-cluster
+gcloud container clusters create example-cluster --zone europe-west1-b
+gcloud container clusters get-credentials example-cluster --zone europe-west1-b
 
 # create service account
 gcloud iam service-accounts create gitlab-ci-token --display-name "Account is used to deploy to Kubernetes from Gitlab CI"
