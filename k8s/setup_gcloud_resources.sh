@@ -27,6 +27,16 @@ PERMISSION_TPL='.bindings |= .+ [{
     "serviceAccount:gitlab-ci-token@%PROJECT_ID%.iam.gserviceaccount.com"
   ],
   "role": "roles/storage.admin"
+}, {
+  "members": [
+    "serviceAccount:gitlab-ci-token@%PROJECT_ID%.iam.gserviceaccount.com"
+  ],
+  "role": "roles/storage.objectCreator"
+}, {
+  "members": [
+    "serviceAccount:gitlab-ci-token@%PROJECT_ID%.iam.gserviceaccount.com"
+  ],
+  "role": "roles/storage.objectViewer"
 }]'
 
 PERMISSION=`echo $PERMISSION_TPL | sed "s/%PROJECT_ID%/$PROJECT_ID/g"`
