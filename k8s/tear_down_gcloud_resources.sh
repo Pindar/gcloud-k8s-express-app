@@ -4,7 +4,7 @@
 PROJECT_ID=${1:-"test-gitlabci-k8s"}
 
 # remove cluster
-gcloud container clusters delete example-cluster -q
+gcloud container clusters delete example-cluster -q --zone europe-west1-b
 
 # remove service-account
 gcloud iam service-accounts delete gitlab-ci-token@${PROJECT_ID}.iam.gserviceaccount.com -q
