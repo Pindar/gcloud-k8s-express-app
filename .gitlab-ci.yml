@@ -71,13 +71,11 @@ stop_review:
 deploy_staging:
   variables:
     DOMAIN: ""
-    NAMESPACE: "staging"
+    NAMESPACE: "production"
   stage: deploy
   script:
     - chmod +x k8s/deploy.sh
     - ./k8s/deploy.sh $NAMESPACE
-    - export DOMAIN=`kubectl --namespace=$NAMESPACE get service/hello-deployment-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`
-    - echo "Then access your service via http://$DOMAIN"
   environment:
     name: $NAMESPACE
     url: http://citeststaging.dittlmann.com
@@ -93,8 +91,6 @@ deploy_production:
   script:
     - chmod +x k8s/deploy.sh
     - ./k8s/deploy.sh $NAMESPACE
-    - export DOMAIN=`kubectl --namespace=$NAMESPACE get service/hello-deployment-frontend --output=json | jq -r '.status.loadBalancer.ingress[0].ip'`
-    - echo "Then access your service via http://$DOMAIN"
   environment:
     name: $NAMESPACE
     url: http://citestprod.dittlmann.com

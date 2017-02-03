@@ -7,7 +7,7 @@ function create_namespace {
 }
 
 # deploy Deployment
-if [[ "$CI_ENVIRONMENT" = "production" || "$CI_ENVIRONMENT" = "staging"  ]]; then
+if [[ "$CI_ENVIRONMENT" = "production" ]]; then
   create_namespace production
   kubectl apply --namespace=production -f k8s/${CI_ENVIRONMENT}/ --record
   kubectl apply --namespace=production -f k8s/ingress/ --record
