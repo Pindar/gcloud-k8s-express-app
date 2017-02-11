@@ -7,12 +7,14 @@ spec:
   - host: STAGING_DOMAIN
     http:
       paths:
-      - backend:
+      - path: /*
+        backend:
           serviceName: hello-deployment-frontend-staging
-          servicePort: 3000
+          servicePort: 80
   - host: PRODUCTION_DOMAIN
     http:
       paths:
-      - backend:
+      - path: /*
+        backend:
           serviceName: hello-deployment-frontend-production
-          servicePort: 3000
+          servicePort: 80
