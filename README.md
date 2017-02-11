@@ -14,15 +14,17 @@ This repository provides an hello world application based on express which will 
 1. Get gitlab-ci-token and prepare it for gitlab-ci `cat gitlab-ci-token.json | base64`, copy output to clipboard
 1. Prepare variables at gitlab-ci
 
-| Name                                 | Value                                                         |
-|--------------------------------------|---------------------------------------------------------------|
-| GCLOUD_GITLAB_CI_SERVICE_ACCOUNT_KEY | output of previous step                                       |
-| CI_REGISTRY_IMAGE                    | eu.gcr.io/test-gitlabci-k8s-XXX/kbnw-express-app              | 
-| CLUSTER_NAME                         | example-cluster                                               |
-| GCLOUD_GITLAB_CI_SERVICE_ACCOUNT     | gitlab-ci-token@test-gitlabci-k8s-XXX.iam.gserviceaccount.com |
-| GCLOUD_ZONE                          | europe-west1-b                                                |
+| Name                                 | Value                                                                     |
+|--------------------------------------|---------------------------------------------------------------------------|
+| GCLOUD_GITLAB_CI_SERVICE_ACCOUNT_KEY | output of previous step                                                   |
+| CI_REGISTRY_IMAGE                    | eu.gcr.io/test-gitlabci-k8s-XXX/kbnw-express-app                          | 
+| CLUSTER_NAME                         | example-cluster                                                           |
+| GCLOUD_GITLAB_CI_SERVICE_ACCOUNT     | gitlab-ci-token@test-gitlabci-k8s-XXX.iam.gserviceaccount.com             |
+| GCLOUD_ZONE                          | europe-west1-b                                                            |
+| DOMAIN                               | your domain name, e.g., example.com                                       |
+| PROD_SUBDOMAIN                       | your production subdomain, e.g., www for www.example.com                  |
+| STAGING_SUBDOMAIN                    | your staging subdomain, e.g., citeststaging for citeststaging.example.com |
 
-1. adapt to your host names in k8s/ingress/ingress.yaml and .gitlab-ci.yml
 1. let it run on gitlab-ci
 1. configure kubectl `gcloud auth application-default login && gcloud --quiet container clusters get-credentials example-cluster --zone europe-west1-b && export KUBERNETES_CONFIG=~/.kube/config`
 1. [OPTIONAL] activate context `kubectl config get-contexts`, `kubectl config use-context [CONTEXT_NAME]`

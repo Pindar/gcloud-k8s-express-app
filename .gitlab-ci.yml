@@ -4,9 +4,6 @@ image: pindar/gcloud-kubectl-docker:latest
 # improved performance.
 variables:
   DOCKER_DRIVER: overlay
-  DOMAIN: "itnotes.de"
-  PROD_SUBDOMAIN: "citestprod"
-  STAGING_SUBDOMAIN: "citeststaging"
 
 services:
   - docker:dind
