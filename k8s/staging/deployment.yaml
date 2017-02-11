@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: hello-deployment
+  name: hello-deployment-staging
 spec:
   replicas: 2
   selector:
