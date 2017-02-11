@@ -11,7 +11,7 @@ This repository provides an hello world application based on express which will 
 1. Clone git repository `git clone https://github.com/Pindar/gcloud-k8s-express-app.git && cd gcloud-k8s-express-app/`
 1. Setup GCloud project `./k8s/setup_gcloud_project.sh [test-gitlabci-k8s-XXX]`, wait until project is ready
 1. Setup GCloud resources `./k8s/setup_gcloud_resources.sh [test-gitlabci-k8s-XXX]`
-1. Get gitlab-ci-token and prepare it for gitlab-ci `cat gitlab-ci-token.json | base64`, copy output to clipboard
+1. Get gitlab-ci-token and prepare it for gitlab-ci `cat gitlab-ci-token.json | base64`, copy output to clipboard on a mac e.g., `… | pbcopy`
 1. Prepare variables at gitlab-ci
 
 | Name                                 | Value                                                                     |
