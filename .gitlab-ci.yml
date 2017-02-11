@@ -71,7 +71,7 @@ stop_review:
 deploy_staging:
   variables:
     DOMAIN: ""
-    NAMESPACE: "production"
+    NAMESPACE: "staging"
   stage: deploy
   script:
     - chmod +x k8s/deploy.sh
