@@ -13,12 +13,12 @@ sed -i.bak "s#PRODUCTION_DOMAIN#$PROD_SUBDOMAIN.$DOMAIN#" k8s/ingress/*.yaml
 
 # deploy Deployment
 if [[ "$CI_ENVIRONMENT" = "production" || "$CI_ENVIRONMENT" = "staging" ]]; then
-  # create_namespace production
+  create_namespace production
   # update docker image to latest
   sed -i.bak "s#IMAGE_PLACEHOLDER#$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-`echo $CI_BUILD_REF | head -c 8`}#" k8s/${CI_ENVIRONMENT}/*.yaml
   # apply changes and create/update ingress
-  kubectl apply --namespace=default -f k8s/${CI_ENVIRONMENT}/ --record
-  kubectl apply --namespace=default -f k8s/ingress/ --record
+  kubectl apply --namespace=production -f k8s/${CI_ENVIRONMENT}/ --record
+  kubectl apply --namespace=production -f k8s/ingress/ --record
 
 else
   create_namespace ${CI_ENVIRONMENT}
