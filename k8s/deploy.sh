@@ -7,8 +7,8 @@ function create_namespace {
 }
 
 # set domains
-sed -i.bak 's#STAGING_DOMAIN#$STAGING_SUBDOMAIN.$DOMAIN#' k8s/ingress/*.yaml
-sed -i.bak 's#PRODUCTION_DOMAIN#$PROD_SUBDOMAIN.$DOMAIN#' k8s/ingress/*.yaml
+sed -i.bak "s#STAGING_DOMAIN#$STAGING_SUBDOMAIN.$DOMAIN#" k8s/ingress/*.yaml
+sed -i.bak "s#PRODUCTION_DOMAIN#$PROD_SUBDOMAIN.$DOMAIN#" k8s/ingress/*.yaml
 
 
 # deploy Deployment
