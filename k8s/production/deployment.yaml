@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: hellonode
-        image: eu.gcr.io/sd-test-jenkins-cd/kbnw-express-app:latest
+        image: IMAGE_PLACEHOLDER
         imagePullPolicy: IfNotPresent
         ports:
         - name: app-port

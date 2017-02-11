@@ -9,12 +9,16 @@ function create_namespace {
 # deploy Deployment
 if [[ "$CI_ENVIRONMENT" = "production" || "$CI_ENVIRONMENT" = "staging" ]]; then
   create_namespace production
+  # update docker image to latest
+  sed -i.bak 's#IMAGE_PLACEHOLDER#$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-`echo $CI_BUILD_REF | head -c 8`}#' k8s/${CI_ENVIRONMENT}/*.yaml
+  # apply changes and create/update ingress
   kubectl apply --namespace=production -f k8s/${CI_ENVIRONMENT}/ --record
   kubectl apply --namespace=production -f k8s/ingress/ --record
+
 else
   create_namespace ${CI_ENVIRONMENT}
+  # update docker image to latest
+  sed -i.bak 's#IMAGE_PLACEHOLDER#$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-`echo $CI_BUILD_REF | head -c 8`}#' k8s/dev/*.yaml
+  # apply changes
   kubectl apply --namespace=${CI_ENVIRONMENT} -f k8s/dev/ --record
 fi
-
-# update docker image to latest
-kubectl set image deployment/hello-deployment hellonode=$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-`echo $CI_BUILD_REF | head -c 8`} --namespace=${CI_ENVIRONMENT}

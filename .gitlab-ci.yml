@@ -4,6 +4,9 @@ image: pindar/gcloud-kubectl-docker:latest
 # improved performance.
 variables:
   DOCKER_DRIVER: overlay
+  DOMAIN: "itnotes.de"
+  PROD_SUBDOMAIN: "citestprod"
+  STAGING_SUBDOMAIN: "citeststaging"
 
 services:
   - docker:dind
@@ -71,14 +74,14 @@ stop_review:
 deploy_staging:
   variables:
     DOMAIN: ""
-    NAMESPACE: "staging"
+    STAGING_ENV: "staging"
   stage: deploy
   script:
     - chmod +x k8s/deploy.sh
-    - ./k8s/deploy.sh $NAMESPACE
+    - ./k8s/deploy.sh $STAGING_ENV
   environment:
-    name: $NAMESPACE
-    url: http://citeststaging.itnotes.de
+    name: $STAGING_ENV
+    url: http://$STAGING_SUBDOMAIN.$DOMAIN
   only:
     - master
     - tags
@@ -86,14 +89,14 @@ deploy_staging:
 deploy_production:
   variables:
     DOMAIN: ""
-    NAMESPACE: "production"
+    STAGING_ENV: "production"
   stage: deploy
   script:
     - chmod +x k8s/deploy.sh
-    - ./k8s/deploy.sh $NAMESPACE
+    - ./k8s/deploy.sh $STAGING_ENV
   environment:
-    name: $NAMESPACE
-    url: http://citestprod.itnotes.de
+    name: $STAGING_ENV
+    url: http://$PROD_SUBDOMAIN.$DOMAIN
   when: manual
   only:
     - tags
