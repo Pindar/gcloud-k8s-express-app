@@ -34,6 +34,8 @@ spec:
             port: app-port
           initialDelaySeconds: 3
           periodSeconds: 3
+        # The readiness probe must be exposed on the port matching the servicePort specified in the Ingress
+        # https://github.com/kubernetes/contrib/tree/master/ingress/controllers/gce/examples/health_checks
         readinessProbe:
           httpGet:
             path: /healthz
