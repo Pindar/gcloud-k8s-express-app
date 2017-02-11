@@ -24,4 +24,12 @@ This repository provides an hello world application based on express which will 
 
 1. adapt to your host names in k8s/ingress/ingress.yaml and .gitlab-ci.yml
 1. let it run on gitlab-ci
+1. configure kubectl `gcloud auth application-default login && gcloud --quiet container clusters get-credentials example-cluster --zone europe-west1-b && export KUBERNETES_CONFIG=~/.kube/config`
+1. [OPTIONAL] activate context `kubectl config get-contexts`, `kubectl config use-context [CONTEXT_NAME]`
 1. update your DNS settings to the new ingress IP `kubectl --namespace=production get ing`
+
+
+## Clean up kubectl config
+
+1. Remove context; list them `kubectl config get-contexts`, remove `kubectl config delete-context [CONTEXT_NAME]`
+1. Remove cluster; list them `kubectl config get-clusters`, remove `kubectl config delete-cluster [CLUSTER_NAME]`
