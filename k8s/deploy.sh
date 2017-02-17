@@ -25,5 +25,6 @@ else
   # update docker image to latest
   sed -i.bak "s#IMAGE_PLACEHOLDER#$CI_REGISTRY_IMAGE:${CI_BUILD_TAG:-`echo $CI_BUILD_REF | head -c 8`}#" k8s/dev/*.yaml
   # apply changes
-  kubectl apply --namespace=${CI_ENVIRONMENT} -f k8s/dev/ --record
+  kubectl apply --namespace=${CI_ENVIRONMENT} -f k8s/dev/
+  kubectl describe svc hello-deployment --namespace ${CI_ENVIRONMENT} || kubectl expose deployment hello-deployment --port=80 --target-port=3000 --namespace ${CI_ENVIRONMENT}
 fi
