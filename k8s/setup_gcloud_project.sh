@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ "$1" = "" ]]; then
+  echo "usage specify PROJECT_ID";
+  exit 1;
+fi
+
 # First argument is project id, defaults to test-gitlabci-k8s
 PROJECT_ID=${1:-"test-gitlabci-k8s"}
 # Second argument is billing account id, defaults to an account which is marked as "Mein Rechnungskonto"
