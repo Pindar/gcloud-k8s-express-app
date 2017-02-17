@@ -5,3 +5,5 @@ gitlab-ci-token.json
 policy.json
 .nyc_output/
 coverage/
+.env
+.token
