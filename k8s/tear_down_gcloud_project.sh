@@ -5,6 +5,6 @@ if [[ "$1" = "" ]]; then
   exit 1;
 fi
 
-PROJECT_ID=test-gitlabci-k8s
+PROJECT_ID=${1:-"test-gitlabci-k8s"}
 
 gcloud projects delete $PROJECT_ID
