@@ -26,14 +26,17 @@ If you don't trust the shared gitlab-ci-runner on gitlab.com check out this rela
 | PROD_SUBDOMAIN                       | your production subdomain, e.g., www for www.example.com                  |
 | STAGING_SUBDOMAIN                    | your staging subdomain, e.g., citeststaging for citeststaging.example.com |
 
-1. let it run on gitlab-ci
-1. Proxy to your Cluster. First run `kubectl proxy --port 8080` and second start web preview, see ![](web_preview.png)
+![](doc/images/gitlab_secret_variables_section.png)
+
+1. let it run on gitlab-ci ![](doc/images/gitlab_pipeline.png)
+1. update your DNS settings to the new ingress IP `kubectl --namespace=production get ing`
+1. Proxy to your Cluster. First run `kubectl proxy --port 8080` and second start web preview, see ![](doc/images/web_preview.png)
 
 *In case you run it locally on your pc or mac*
 
 1. configure kubectl `gcloud auth application-default login && gcloud --quiet container clusters get-credentials example-cluster --zone europe-west1-b && export KUBERNETES_CONFIG=~/.kube/config`
 1. [OPTIONAL] activate context `kubectl config get-contexts`, `kubectl config use-context [CONTEXT_NAME]`
-1. update your DNS settings to the new ingress IP `kubectl --namespace=production get ing`
+
 
 
 ## Clean up
