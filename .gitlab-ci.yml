@@ -43,10 +43,10 @@ deploy_branch:
     - chmod +x k8s/deploy.sh
     - ./k8s/deploy.sh ${CI_BUILD_REF_SLUG}
     - echo 'To access your environment run `kubectl proxy`'
-    - echo "Then access your service via http://localhost:8001/api/v1/proxy/namespaces/${CI_BUILD_REF_SLUG}/services/hello-deployment-frontend:80/"
+    - echo "Then access your service via http://localhost:8001/api/v1/proxy/namespaces/${CI_BUILD_REF_SLUG}/services/hello-deployment:80/"
   environment:
     name: review/$CI_BUILD_REF_NAME
-    url: http://localhost:8001/api/v1/proxy/namespaces/$CI_BUILD_REF_SLUG/services/hello-deployment-frontend:80/
+    url: http://localhost:8001/api/v1/proxy/namespaces/$CI_BUILD_REF_SLUG/services/hello-deployment:80/
     on_stop: stop_review
   only:
     - branches
