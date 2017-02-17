@@ -22,5 +22,5 @@ Remark:
 ```
 kubectl delete -f ./k8s/gitlab-ci-runner/config-map.yaml \
   && kubectl delete -f ./k8s/gitlab-ci-runner/deployment.yaml \
-  && kubectl ns gitlab
+  && kubectl delete ns gitlab
 ```
