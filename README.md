@@ -10,8 +10,8 @@ If you don't trust the shared gitlab-ci-runner on gitlab.com check out this rela
 1. Create your Google Cloud Platform Account at https://console.cloud.google.com
 1. Start Cloud Shell
 1. Clone git repository `git clone https://github.com/Pindar/gcloud-k8s-express-app.git && cd gcloud-k8s-express-app/`
-1. Setup GCloud project `./k8s/setup_gcloud_project.sh [test-gitlabci-k8s-XXX]`, wait until project is ready
-1. Setup GCloud resources `./k8s/setup_gcloud_resources.sh [test-gitlabci-k8s-XXX]`
+1. Setup GCloud project `./k8s/gcp/setup_gcloud_project.sh [test-gitlabci-k8s-XXX]`, wait until project is ready
+1. Setup GCloud resources `./k8s/gcp/setup_gcloud_resources.sh [test-gitlabci-k8s-XXX]`
 1. Get gitlab-ci-token and prepare it for gitlab-ci `cat gitlab-ci-token.json | base64`, copy output to clipboard on a mac e.g., `… | pbcopy` (note: in case you copy from the cloud console please copy the base 64 encoded string first into a local file and from there again to the clipboard. A direct copy/paste doesn't work)
 1. Prepare variables at gitlab-ci
 
@@ -48,5 +48,5 @@ If you don't trust the shared gitlab-ci-runner on gitlab.com check out this rela
 
 *project/resources*
 
-1. `./k8s/tear_down_gcloud_resources.sh [test-gitlabci-k8s-XXX]`
-1. `./k8s/tear_down_gcloud_project.sh [test-gitlabci-k8s-XXX]`
+1. `./k8s/gcp/tear_down_gcloud_resources.sh [test-gitlabci-k8s-XXX]`
+1. `./k8s/gcp/tear_down_gcloud_project.sh [test-gitlabci-k8s-XXX]`
