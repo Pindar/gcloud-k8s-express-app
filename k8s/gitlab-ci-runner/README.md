@@ -1,13 +1,7 @@
 # How to install
 
-1. Get Gitlab-CI Token by running `gitlab-ci-multi-runner register` somewhere and use the [register token](https://gitlab.com/[USER]/[PROJECT-NAME]/runners)
-1. Prepare config-map: change access token according to what you now find in `cat /etc/gitlab-runner/config.toml` , `sed -i.bak 's#"...."#"YOUR_TOKEN"#' ./k8s/gitlab-ci-runner/config-map.yaml`
-1. Setup Gitlab CI runner
-```
-kubectl get ns gitlab || kubectl create ns gitlab \
-&& kubectl create -f ./k8s/gitlab-ci-runner/config-map.yaml \
-&& kubectl create -f ./k8s/gitlab-ci-runner/deployment.yaml
-```
+1. Get Gitlab-CI Token by running `gitlab-ci-multi-runner register` somewhere and use the register token you can find at https://gitlab.com/[USER]/[PROJECT-NAME]/runners
+1. Run `setup_gitlab_ci_runner.sh [YOUR_GITLAB_RUNNER_TOKEN]`
 1. Set environment variable `DOCKER_HOST=tcp://localhost:2375` as secret variable in gitlab. For more information check out https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/blob/master/docs/executors/kubernetes.md
 
 Remark:
@@ -19,8 +13,4 @@ Remark:
 
 # Clean up
 
-```
-kubectl delete -f ./k8s/gitlab-ci-runner/config-map.yaml \
-  && kubectl delete -f ./k8s/gitlab-ci-runner/deployment.yaml \
-  && kubectl delete ns gitlab
-```
+1. Run `tear_down_gitlab_ci_runner.sh`
