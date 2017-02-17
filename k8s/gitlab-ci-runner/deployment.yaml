@@ -22,14 +22,8 @@ spec:
         volumeMounts:
         - mountPath: /etc/gitlab-runner
           name: config
-        - mountPath: /etc/ssl/certs
-          name: cacerts
-          readOnly: true
       restartPolicy: Always
       volumes:
       - configMap:
           name: gitlab-runner
         name: config
-      - hostPath:
-          path: /usr/share/ca-certificates
-        name: cacerts

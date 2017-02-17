@@ -6,6 +6,7 @@ metadata:
 data:
   config.toml: |
     concurrent = 4
+    check_interval = 70
 
     [[runners]]
       name = "Kubernetes Runner"
