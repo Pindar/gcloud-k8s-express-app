@@ -1,10 +1,11 @@
 # kbnw-express-app
 
-This repository provides an hello world application based on express which will be automatically deployed to Kubernetes on Google Cloud Platform through a gitlab-ci configuration.
+This repository provides an hello world application based on express which will be automatically deployed to Kubernetes on Google Cloud Platform (GKE) through a gitlab-ci configuration.
 
 # Step by Step
 
-## Setup Google Cloud Platform
+This step by step instructions will help you to get GCP, GKE up and running and wire everything with a gitlab installation -- even gitlab.com.
+If you don't trust the shared gitlab-ci-runner on gitlab.com check out this related [how-to](./k8s/gitlab-ci-runner/README.md) to have your own runners on your GKE/Kubernetes cluster.
 
 1. Create your Google Cloud Platform Account at https://console.cloud.google.com
 1. Start Cloud Shell
