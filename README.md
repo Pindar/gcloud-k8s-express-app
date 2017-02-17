@@ -48,5 +48,6 @@ This step by step instructions will help you to get GCP, GKE up and running and 
 
 *project/resources*
 
+1. `./k8s/teardown.sh`
 1. `./k8s/gcp/tear_down_gcloud_resources.sh [test-gitlabci-k8s-XXX]`
 1. `./k8s/gcp/tear_down_gcloud_project.sh [test-gitlabci-k8s-XXX]`
