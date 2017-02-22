@@ -8,6 +8,7 @@ function create_key {
 }
 
 GCLOUD_PROJECT_ID=${1:-"$GCLOUD_PROJECT_ID"}
+GITLAB_PROJECT_ID=${2:-"$GITLAB_PROJECT_ID"}
 
 if [[ "$GCLOUD_PROJECT_ID" = "" ]]; then
   echo "usage specify GCLOUD_PROJECT_ID";
