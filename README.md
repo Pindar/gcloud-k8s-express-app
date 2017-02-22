@@ -11,8 +11,7 @@ This step by step instructions will help you to get GCP, GKE up and running and 
 1. Clone git repository `git clone https://github.com/Pindar/gcloud-k8s-express-app.git && cd gcloud-k8s-express-app/`
 1. Setup GCloud project `./k8s/gcp/setup_gcloud_project.sh [test-gitlabci-k8s-XXX]`, wait until project is ready
 1. Setup GCloud resources `./k8s/gcp/setup_gcloud_resources.sh [test-gitlabci-k8s-XXX]`
-1. Get gitlab-ci-token and prepare it for gitlab-ci `cat gitlab-ci-token.json | base64 > gitlab-ci-token.base64`. Download file to your mac/pc through the download functionality in Cloud Shell ![](doc/images/gcp_download_file.png)
-1. Prepare variables at gitlab-ci
+1. Prepare variables at gitlab: to create them the first time you can use the UI or `create_gitlab_variables.sh [test-gitlabci-k8s-XXX]` for updating just call `update_gitlab_variables.sh [test-gitlabci-k8s-XXX]`. The scripts need all variables defined within a .gitlab-env file.
 
 | Name                                 | Value                                                                     |
 |--------------------------------------|---------------------------------------------------------------------------|
@@ -24,6 +23,7 @@ This step by step instructions will help you to get GCP, GKE up and running and 
 | DOMAIN                               | your domain name, e.g., example.com                                       |
 | PROD_SUBDOMAIN                       | your production subdomain, e.g., www for www.example.com                  |
 | STAGING_SUBDOMAIN                    | your staging subdomain, e.g., citeststaging for citeststaging.example.com |
+| DOCKER_HOST                          | to get gitlab runner working on kubernetes set it to tcp://localhost:2375 |
 
 ![](doc/images/gitlab_secret_variables_section.png)
 

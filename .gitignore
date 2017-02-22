@@ -7,3 +7,4 @@ policy.json
 coverage/
 .env
 .token
+.gitlab-env
