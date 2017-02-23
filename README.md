@@ -24,6 +24,7 @@ This step by step instructions will help you to get GCP, GKE up and running and 
 | PROD_SUBDOMAIN                       | your production subdomain, e.g., www for www.example.com                  |
 | STAGING_SUBDOMAIN                    | your staging subdomain, e.g., citeststaging for citeststaging.example.com |
 | DOCKER_HOST                          | to get gitlab runner working on kubernetes set it to tcp://localhost:2375 |
+| GCLOUD_PROJECT                       | google cloud project id, e.g., test-gitlabci-k8s-XXX                      |
 
 ![](doc/images/gitlab_secret_variables_section.png)
 
