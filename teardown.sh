@@ -9,6 +9,10 @@ GCLOUD_PROJECT_ID=${1:-"$GCLOUD_PROJECT_ID"}
 # tear down cluster resources
 ./k8s/teardown.sh
 
+# taer down of all google cloud resources for K8s takes a little bit of time.
+# to have no left over we need to give it some time.
+sleep 60
+
 # delete gcloud resources
 ./k8s/gcp/tear_down_gcloud_resources.sh $GCLOUD_PROJECT_ID
 
