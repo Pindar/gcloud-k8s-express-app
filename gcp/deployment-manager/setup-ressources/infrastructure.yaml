@@ -1,0 +1,14 @@
+resources:
+- name: example-cluster
+  type: container.v1.cluster
+  properties:
+    zone: europe-west1-b
+    cluster:
+      name: example-cluster
+      initialNodeCount: 3
+      nodeConfig:
+        oauthScopes:
+        - https://www.googleapis.com/auth/compute
+        - https://www.googleapis.com/auth/devstorage.read_only
+        - https://www.googleapis.com/auth/logging.write
+        - https://www.googleapis.com/auth/monitoring

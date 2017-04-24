@@ -8,3 +8,4 @@ coverage/
 .env
 .token
 .gitlab-env
+gcp/deployment-manager/setup-project/config.yaml
