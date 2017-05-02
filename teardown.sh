@@ -14,7 +14,7 @@ GCLOUD_PROJECT_ID=${1:-"$GCLOUD_PROJECT_ID"}
 sleep 60
 
 # delete gcloud resources
-./k8s/gcp/tear_down_gcloud_resources.sh $GCLOUD_PROJECT_ID
+./gcp/tear_down_gcloud_resources.sh
 
 # last missing step
 # ./k8s/gcp/tear_down_gcloud_project.sh $GCLOUD_PROJECT_ID
