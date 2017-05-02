@@ -3,7 +3,8 @@ imports:
 
 resources:
 # The "name" property below will be the name of the new project
-- name: XX-test-gitlabci-k8s-1
+# needs to be between 4 to 30 characters
+- name: $$XX-test-gitlabci-k8s-1$$
   type: project.py
   properties:
     # Change this to your organization ID.
@@ -33,13 +34,13 @@ resources:
         - user:$$YOUR_DATA$$
       - role: roles/container.developer
         members:
-        - serviceAccount:gitlab-ci-token@cloudservices.gserviceaccount.com
+        - serviceAccount:gitlab-ci-token@$$XX-test-gitlabci-k8s-1$$.iam.gserviceaccount.com
       - role: roles/storage.admin
         members:
-        - serviceAccount:gitlab-ci-token@cloudservices.gserviceaccount.com
+        - serviceAccount:gitlab-ci-token@$$XX-test-gitlabci-k8s-1$$.iam.gserviceaccount.com
       - role: roles/storage.objectCreator
         members:
-        - serviceAccount:gitlab-ci-token@cloudservices.gserviceaccount.com
+        - serviceAccount:gitlab-ci-token@$$XX-test-gitlabci-k8s-1$$.iam.gserviceaccount.com
       - role: roles/storage.objectViewer
         members:
-        - serviceAccount:gitlab-ci-token@cloudservices.gserviceaccount.com
+        - serviceAccount:gitlab-ci-token@$$XX-test-gitlabci-k8s-1$$.iam.gserviceaccount.com
